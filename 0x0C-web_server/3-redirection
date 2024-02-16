@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#!/bin/bash
 # Install nginx
 
 sudo apt update
@@ -30,4 +29,3 @@ EOF
 sudo service nginx restart
 
 echo "Nginx configured for redirection successfully."
-
