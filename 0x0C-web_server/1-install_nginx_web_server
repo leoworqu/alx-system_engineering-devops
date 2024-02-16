@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Install nginx
-
-apt update
-apt install -y nginx
+sudo su
+sudo apt update
+sudo apt install -y nginx
 
 # Set up nginx configuration
-cat <<EOF > /etc/nginx/sites-available/default
+sudo cat <<EOF > /etc/nginx/sites-available/default
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
@@ -26,6 +26,6 @@ server {
 EOF
 
 # Restart nginx
-kill -HUP $(pgrep nginx)
+sudo kill -HUP $(pgrep nginx)
 
 echo "Nginx installed and configured successfully."
