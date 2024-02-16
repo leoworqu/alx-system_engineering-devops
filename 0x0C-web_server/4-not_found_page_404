@@ -1,12 +1,37 @@
 #!/usr/bin/env bash
 #configures a new Ubuntu machine nginx
-sudo apt-get update
-sudo apt-get install nginx -y
-sudo ufw allow 'Nginx HTTP'
-echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
-new_string="listen 80 default_server;\\n\\tlocation \/redirect_me {\\n\\t\\treturn 301 https:\/\/www.youtube.com\/;\\n\\t}"
-sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
-echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/404.html
-new_string="listen 80 default_server;\\nerror_page 404 \/404.html;\\n\\tlocation = \/404.html {\\n\\t\\troot \/usr\/share\/nginx\/html;\\n\\t\\tinternal;\\n\\t}"
-sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
-sudo service nginx start
+
+sudo apt update
+sudo apt install -y nginx
+
+# Set up nginx configuration for custom 404 page
+cat <<EOF > /etc/nginx/sites-available/default
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+        internal;
+        root /var/www/html;
+        echo "Ceci n'est pas une page";
+    }
+}
+EOF
+
+# Create the custom 404 page
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+
+# Restart nginx to apply the changes
+sudo service nginx restart
+
+echo "Nginx configured for custom 404 page successfully."
