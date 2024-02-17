@@ -1,22 +1,17 @@
 #!/usr/bin/env bash
-# Usage: ./1-world_wide_web <domain> [<subdomain>]
-# Display information about subdomains.
-
-if [ $# -lt 1 ] || [ $# -gt 2 ]; then
-  echo "Usage: $0 <domain> [<subdomain>]"
-  exit 1
+# website
+if [ $# -eq 0 ]; then
+    exit
 fi
-
-domain="$1"
-subdomain="${2:-www} lb-01 web-01 web-02}"
-
-for sub in $subdomain; do
-  info=$(dig +short "$sub.$domain")
-  if [ -n "$info" ]; then
-    type=$(echo "$info" | head -n1 | awk '{print $1}')
-    ip=$(echo "$info" | tail -n1)
-    echo "The subdomain $sub is a $type record and points to $ip"
-  else
-    echo "No information found for subdomain $sub"
-  fi
+sites=("www" "lb-01" "web-01" "web-02")
+if [ "$2" ]
+then
+    sites=("$2")
+fi
+for i in "${sites[@]}"
+do
+    first="$(dig $i."$1" | grep -A1 'ANSWER SECTION:'| tail -1 | awk '{print $1}'|cut -d '.' -f1)"
+    second="$(dig $i."$1" | grep -A1 'ANSWER SECTION:'| tail -1 | awk '{print $4}')"
+    third="$(dig $i."$1" | grep -A1 'ANSWER SECTION:'| tail -1 | awk '{print $5}')"
+    echo "The subdomain $first is a $second record and points to $third"
 done
