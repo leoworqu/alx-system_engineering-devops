@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sets up a new 404 error pag  with index and 301 page
+# sets up a new nginx server 404 error page with index and 301 page
 sudo apt-get update
 sudo apt-get install -y nginx 
 echo "Hello World!" > index.html
