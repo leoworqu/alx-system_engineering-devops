@@ -2,7 +2,7 @@
 # Install the load balancer
 
 sudo apt-get -y update
-sudo apt install -y haproxy=1.8.\*
+sudo apt install -y haproxy
 file="/etc/haproxy/haproxy.cfg"
 
 # Append frontend configuration to haproxy.cfg
