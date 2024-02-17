@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # Run Nginx as Nginx
-sed -i 's/user\s*[^;]*/user nginx;/' /etc/nginx/nginx.conf
-sed -i 's/listen\s*[^;]*;/listen *8080;/' /etc/nginx/nginx.conf
-systemctl start nginx
+sudo sed -i 's/user\s*[^;]*/user nginx;/' /etc/nginx/nginx.conf
+sudo sed -i 's/listen\s*[^;]*;/listen *8080;/' /etc/nginx/nginx.conf
+sudo -u nginx service nginx restart
