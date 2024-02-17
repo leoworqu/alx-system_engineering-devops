@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#a Bash script that accepts one argument and converts it into user
+username=$1
+sudo -u "$username" whoami
