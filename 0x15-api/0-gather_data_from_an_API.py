@@ -1,7 +1,10 @@
+#!/usr/bin/python3
+
 import requests
 import sys
 
 def get_employee_todo_progress(employee_id):
+    """get_employee_todo_progress"""
     base_url = 'https://jsonplaceholder.typicode.com/users'
     todo_url = f'{base_url}/{employee_id}/todos'
     
