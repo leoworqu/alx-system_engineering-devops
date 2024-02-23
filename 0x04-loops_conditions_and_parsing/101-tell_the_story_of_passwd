@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 # Using 'while' loop and IFS to parse /etc/passwd
 
-while IFS=: read -r username _ userid groupid info homedir shell; do
-    user_info=$(echo "$info" | cut -d':' -f5)
-    passcode=$(echo "$info" | cut -d':' -f2)
-    echo "The user $username is part of the $groupid gang, lives in $homedir and rides $shell."
-    echo "User ID's place is protected by the passcode $passcode, more info about the user here: $user_info"
-done < /etc/passwd
+file="/etc/passwd"
+
+while IFS= read -r line; do
+  user=$(echo "$line" | cut -d ':' -f1)
+  gid=$(echo "$line" | cut -d ':' -f4)
+  dir=$(echo "$line" | cut -d ':' -f6)
+  shell=$(echo "$line" | cut -d ':' -f7)
+  uid=$(echo "$line" | cut -d ':' -f3)
+  pass=$(echo "$line" | cut -d ':' -f2)
+  info=$(echo "$line" | cut -d ':' -f5)
+
+  echo "The user $user is part of the $gid gang, lives in $dir and rides $shell. $uid's place is protected by the passcode $pass, more info about the user here: $info"
+done < "$file"
