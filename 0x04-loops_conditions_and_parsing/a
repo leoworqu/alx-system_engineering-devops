@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+a="$1"
+touch "$a"
+chmod u+x "$a"
+vim "$a"
