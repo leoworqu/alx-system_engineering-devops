@@ -1,7 +1,7 @@
-#kills killmeow
-exec {'pkill killmenow':
-  path   => '/usr/bin',
-  command   => 'pkill killmenow',
-  provider => shell,
-  returns => [0, 1],
+# Puppet manifest to kill a process named "killmenow"
+exec { 'kill_process':
+  command     => 'pkill killmenow',
+  path        => ['/bin', '/usr/bin'],
+  onlyif      => 'pgrep killmenow',
+  refreshonly => true,
 }
