@@ -1,9 +1,6 @@
 # changes all the phpp extensions in wp_setting file with php
-$file_path = ' /var/www/html/wp-settings.php'
 
-file_line { 'replace':
-  path    => $file_path,
-  match   => '\.phpp',
-  line    => '.php',
-  replace => true,
+exec { 'replace_phpp_with_php':
+  command     => 'sed -i "s/\.phpp/.php/g" /var/www/html/wp-settings.php',
+  path        => '/bin:/usr/bin',
 }
