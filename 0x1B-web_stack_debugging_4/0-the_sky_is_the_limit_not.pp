@@ -1,6 +1,6 @@
-# replace_15_with_3999 
+# replace_15_with_4096 
 
-exec { 'replace_4096_with_3999':
-  command => 'sed -i "s/15/3999/g" /etc/default/nginx',
+exec { 'replace_15_with_4096':
+  command => 'sed -i "s/15/4096/g" /etc/default/nginx',
   path    => '/bin:/usr/bin',
 }
