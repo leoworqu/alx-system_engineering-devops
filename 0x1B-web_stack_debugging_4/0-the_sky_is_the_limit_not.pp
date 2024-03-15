@@ -1,6 +1,7 @@
-# replace_15_with_4096 
+# replace rhe ulimit
 
-exec { 'replace_15_with_4096':
-  command => 'sed -i "s/15/4096/g" /etc/default/nginx',
-  path    => '/bin:/usr/bin',
+exec { 'increase file limit for nginx':
+  onlyif  => 'test -e /etc/default/nginx',
+  command => "/bin/bash -c 'sed -i \"5s/[0-9]\\+/$$(ulimit -n)/\" /etc/default/nginx && service nginx restart'",
+  provider => shell,
 }
